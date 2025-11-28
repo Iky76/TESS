@@ -1,4 +1,4 @@
-name: KSU
+exportanonifyanonifyame: KSU
 
 on:
   workflow_dispatch:
@@ -108,7 +108,7 @@ jobs:
         OUT_DIR=$KERNEL_DIR/out
         KERNEL_IMAGE_DIR=$OUT_DIR/arch/arm64/boot
         KERNEL_IMAGE=$KERNEL_IMAGE_DIR/Image.gz-dtb
-        CONFIG_NAME="tama_${CODENAME}_defconfig"
+        CONFIG_NAME="${CODENAME}_defconfig"
         KERNEL_COMMIT_ID=$(git rev-parse --short=7 HEAD)
         ZIP_NAME="${KERNEL_VER}_${CODENAME}-$(date +%Y%m%d)-${KERNEL_COMMIT_ID}.zip"
         echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
@@ -116,7 +116,7 @@ jobs:
 
         send_telegram_message "🔨 Starting kernel compilation for $CODENAME on branch $KERNEL_BRANCH"
 
-        export KBUILD_BUILD_USER=kanonify
+        export KBUILD_BUILD_USER=Rizj
         export KBUILD_BUILD_HOST=android_build
         export PATH="$CLANG_DIR/bin:$PATH"
 
