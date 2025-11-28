@@ -13,7 +13,7 @@ jobs:
       CHAT_ID: ${{ secrets.CHAT_ID }}
       KERNEL_VER: Stardust-v1.6
       KERNEL_BRANCH: oc
-      KERNEL_REPO: https://github.com/Alone0316/kernel_mido
+      KERNEL_REPO: https://github.com/Iky76gg/kernel_mido
       ANYKERNEL_REPO: https://github.com/NRanjan-17/AnyKernel3
       CLANG_URL: https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r547379.tar.gz
       KSUN_URL: https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh
