@@ -1,4 +1,4 @@
-name: MIDO KSUN BUILD
+name: AURORA KDDI KSUN
 
 on:
   workflow_dispatch:
@@ -12,10 +12,9 @@ jobs:
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
       KERNEL_VER: Stardust-v1.6
-      KERNEL_BRANCH: oc
+      KERNEL_BRANCH: normal
       KERNEL_REPO: https://github.com/Iky76gg/kernel_mido
       ANYKERNEL_REPO: https://github.com/NRanjan-17/AnyKernel3
-      # CLANG r547379
       CLANG_URL: https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r547379.tar.gz
       KSUN_URL: https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh
       KSUN_BRANCH: next
@@ -55,14 +54,6 @@ jobs:
         tar -xf clang.tar.gz -C clang
         rm -f clang.tar.gz
         echo "CLANG_DIR=$KERNEL_DIR/clang" >> $GITHUB_ENV
-    
-    # --- LANGKAH PERBAIKAN DITERAPKAN DISINI ---
-    - name: Remove unsupported Clang flag from Makefile
-      run: |
-        cd $KERNEL_DIR
-        # Menghapus flag yang menyebabkan error 'unknown argument' pada Clang r547379
-        sed -i 's/-enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang//g' Makefile
-    # -------------------------------------------
         
     - name: Set up KernelSU-Next
       run: |
@@ -74,10 +65,6 @@ jobs:
         cd $KERNEL_DIR
         CONFIG_NAME="${CODENAME}_defconfig"
         DEFCONFIG_PATH="arch/arm64/configs/$CONFIG_NAME"
-        
-        # Juga menambahkan baris ini sebagai pencegahan jika error stack protector muncul lagi
-        sed -i 's/CONFIG_CC_STACKPROTECTOR_STRONG=y/# CONFIG_CC_STACKPROTECTOR_STRONG is not set/' "$DEFCONFIG_PATH"
-        
         sed -i "s/CONFIG_LOCALVERSION=\"-perf\"/CONFIG_LOCALVERSION=\"-$KERNEL_VER\"/" "$DEFCONFIG_PATH"
         make O=out ARCH=arm64 "$CONFIG_NAME"
         mv out/.config "$DEFCONFIG_PATH"
