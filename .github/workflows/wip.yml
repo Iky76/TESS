@@ -1,4 +1,4 @@
-name: MIDO KSUN BUILD
+name: MIDO KSUN
 
 on:
   workflow_dispatch:
